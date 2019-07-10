@@ -1,0 +1,16 @@
+select  *  from ( select a.CREATED_TIME, a.ID, ROWNUM rnum from OPP_ITEM_TRACKER a   where DEL_FLG=0  and 
+CREATED_TIME>=to_timestamp('2019-06-10 00:00:00', 'YYYY-MM-DD HH24:MI:SS.FF') 
+and CREATED_TIME<=to_timestamp('2019-07-10 23:59:59', 'YYYY-MM-DD HH24:MI:SS.FF') and ROWNUM <= 30) a where a.rnum  > 20 order by a.CREATED_TIME DESC
+
+
+SELECT rnum, T.ID, t.ITEM_TITLE FROM ( SELECT T.*, rowNum as rnum  FROM ( SELECT * from OPP_ITEM_TRACKER order by ID desc )T)T  
+WHERE rnum < 15 AND rnum>= 0
+
+
+
+ SELECT rnum, t.ID, t.ITEM_TITLE
+  FROM (SELECT t.ID, t.ITEM_TITLE,
+               row_number() over (order by t.ID) rnum
+          FROM OPP_ITEM_TRACKER t
+          ) t
+ WHERE rnum BETWEEN 0 AND 5
