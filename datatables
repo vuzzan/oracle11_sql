@@ -23,3 +23,41 @@ get rowindex
 					}
 				}
 			} );
+
+
+TIMELINE VIEW
+
+// Add event listener for opening and closing details
+			$('#datatable_table tbody').on('click', 'td.details-control', function () {
+				//console.log("OPEN ");
+				var tr = $(this).closest('tr');
+				var row = datatable_table.row( tr );
+				//console.log( row  );
+				var rowIndex = datatable_table.row(row).index();
+				//console.log( "rowIndex = " + rowIndex+" lastRowIndex="+lastRowIndex);
+				if( lastRowIndex!=rowIndex ){
+					if(lastRowIndex!=-1){
+						var lastRow = datatable_table.row(lastRowIndex);
+						//console.log( lastRow  );
+						//console.log( lastRow.child.isShown()  );
+						if( lastRow.child.isShown() ){
+							lastRow.child.hide();
+							tr.removeClass('shown');
+						}
+					}
+					lastRowIndex = rowIndex;
+				}
+				
+				if ( row.child.isShown() ) {
+					// This row is already open - close it
+					row.child.hide();
+					tr.removeClass('shown');
+				}
+				else {
+					// Open this row
+					//lastObjectShown = row.child( format(row.data()) );
+					row.child( format(row.data()) ).show();
+					tr.addClass('shown');
+					
+				}
+			} );
