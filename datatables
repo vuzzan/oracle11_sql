@@ -1,0 +1,25 @@
+get rowindex 
+
+
+// Add event listener for opening and closing details
+			$('#datatable_table tbody').on('click', 'td.details-control', function () {
+				//console.log("OPEN ");
+				var tr = $(this).closest('tr');
+				var row = datatable_table.row( tr );
+				var rowIndex = datatable_table.row(row).index();  // ROWINDEX
+				console.log( "rowIndrowIndex = " + rowIndex)
+				if ( row.child.isShown() ) {
+					// This row is already open - close it
+					row.child.hide();
+					tr.removeClass('shown');
+				}
+				else {
+					// Open this row
+					//lastObjectShown = row.child( format(row.data()) );
+					row.child( format(row.data()) ).show();
+					tr.addClass('shown');
+					if(lastObjectShown){
+						//lastObjectShown.hide();
+					}
+				}
+			} );
